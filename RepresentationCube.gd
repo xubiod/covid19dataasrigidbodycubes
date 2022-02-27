@@ -14,7 +14,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("push_zup"):
 		apply_central_impulse(translation.direction_to(attract_point.translation));
-	elif Input.is_action_just_pressed("push_away"):
+
+	if Input.is_action_just_pressed("push_away"):
 		var newvec = (translation - attract_point.translation);
 		if newvec.x == 0: newvec.x = rand_range(-0.01, 0.01);
 		if newvec.y == 0: newvec.y = rand_range(-0.01, 0.01);
@@ -24,7 +25,8 @@ func _process(_delta: float) -> void:
 #		newvec.y = sign(newvec.y) * 8 / max(abs(newvec.y), 0.1);
 #		newvec.z = sign(newvec.z) * 8 / max(abs(newvec.z), 0.1);
 		apply_central_impulse(newvec);
-	elif Input.is_action_just_pressed("reset"):
+
+	if Input.is_action_just_pressed("reset"):
 		linear_velocity = Vector3.ZERO;
 		angular_velocity = Vector3.ZERO;
 		translation = starting_pos;
@@ -44,6 +46,12 @@ func _process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("sword"):
 		sleeping = false;
+
+	if Input.is_action_just_pressed("zero_gravity"):
+		if gravity_scale == 1:
+			gravity_scale = 0;
+		else:
+			gravity_scale = 1;
 
 	if translation.y < death_barrier:
 		translation = starting_pos;
