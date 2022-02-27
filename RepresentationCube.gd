@@ -42,6 +42,9 @@ func _process(delta: float) -> void:
 			linear_velocity = store_velocity;
 			angular_velocity = store_angular_vel;
 
+	if Input.is_action_just_pressed("sword"):
+		sleeping = false;
+
 	if translation.y < death_barrier:
 		translation = starting_pos;
 		linear_velocity *= 0.9;
