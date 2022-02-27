@@ -5,6 +5,7 @@ APIKey.gd
 *.exe
 *.x86_64
 *.x86
+html5/*
 
 # Temps
 *.tmp
