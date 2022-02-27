@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Spawner.gd" type="Script" id=1]
+[ext_resource path="res://RepresentationCube.tscn" type="PackedScene" id=2]
+[ext_resource path="res://CubeAreaCamera.gd" type="Script" id=3]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 16, 16 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 8, 0.05, 8 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Spawner" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.74924, 0 )
+script = ExtResource( 1 )
+ui_option_path = NodePath("../UI/HBoxContainer/UIOption")
+ui_subset_path = NodePath("../UI/HBoxContainer/SubsetOption")
+ui_label_path = NodePath("../UI/UILabel")
+cubes_to_spawn = ExtResource( 2 )
+attract_point_path = NodePath("../AttractionPoint")
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="RigidBody" type="RigidBody" parent="MeshInstance"]
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/RigidBody"]
+shape = SubResource( 2 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+margin_bottom = 89.0
+color = Color( 0, 0, 0, 0.498039 )
+
+[node name="UILabel" type="Label" parent="UI"]
+margin_left = 16.0
+margin_top = 47.0
+margin_right = 56.0
+margin_bottom = 61.0
+text = "One cube = ?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchor_right = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = 20.0
+
+[node name="UIOption" type="OptionButton" parent="UI/HBoxContainer"]
+margin_right = 160.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 160, 0 )
+focus_mode = 0
+text = "Item 0"
+selected = 0
+
+[node name="VSeparator" type="VSeparator" parent="UI/HBoxContainer"]
+margin_left = 164.0
+margin_right = 168.0
+margin_bottom = 20.0
+
+[node name="SubsetOption" type="OptionButton" parent="UI/HBoxContainer"]
+margin_left = 172.0
+margin_right = 273.0
+margin_bottom = 20.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Total Cases"
+items = [ "Total Cases", null, false, 0, null, "Total Deaths", null, false, 1, null, "Total Tests", null, false, 2, null, "Recovered", null, false, 3, null, "Critcal", null, false, 4, null, "Active", null, false, 5, null ]
+selected = 0
+
+[node name="CubeAreaCamera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 8.88955, 19.2035 )
+script = ExtResource( 3 )
+
+[node name="RayCast" type="RayCast" parent="CubeAreaCamera"]
+cast_to = Vector3( 0, 0, -100 )
+
+[node name="AttractionPoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 3.46826, 5.86584 )
+
+[node name="CSGSphere" type="CSGSphere" parent="AttractionPoint"]
+transform = Transform( 0.340503, 0, 0, 0, 0.340503, 7.45058e-09, 0, -7.45058e-09, 0.340503, 0, 2.20273, -5.41924 )
+
+[connection signal="item_selected" from="UI/HBoxContainer/UIOption" to="Spawner" method="_on_UIOption_item_selected"]
+[connection signal="item_selected" from="UI/HBoxContainer/SubsetOption" to="Spawner" method="_on_UIOption_item_selected"]

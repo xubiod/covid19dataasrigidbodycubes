@@ -1,0 +1,10 @@
+# Do not track API key script
+APIKey.gd
+
+# Exports
+*.exe
+*.x86_64
+*.x86
+
+# Temps
+*.tmp
