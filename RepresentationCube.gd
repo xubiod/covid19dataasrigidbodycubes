@@ -28,14 +28,17 @@ func _process(delta: float) -> void:
 		linear_velocity = Vector3.ZERO;
 		angular_velocity = Vector3.ZERO;
 		translation = starting_pos;
+		sleeping = false;
 
 	if Input.is_action_just_pressed("freeze"):
 		if (mode == MODE_RIGID):
 			mode = MODE_STATIC;
+			sleeping = true;
 			store_velocity = linear_velocity;
 			store_angular_vel = angular_velocity;
 		else:
 			mode = MODE_RIGID;
+			sleeping = false;
 			linear_velocity = store_velocity;
 			angular_velocity = store_angular_vel;
 
