@@ -19,10 +19,10 @@ height = 42.8788
 
 [node name="Spawner" type="Spatial" parent="."]
 script = ExtResource( 1 )
-ui_option_path = NodePath("../UI/HBoxContainer/UIOption")
-ui_subset_path = NodePath("../UI/HBoxContainer/SubsetOption")
-ui_label_path = NodePath("../UI/UILabel")
-ui_updated_path = NodePath("../UI/LastUpdated")
+ui_option_path = NodePath("../CanvasLayer/UI/HBoxContainer/UIOption")
+ui_subset_path = NodePath("../CanvasLayer/UI/HBoxContainer/SubsetOption")
+ui_label_path = NodePath("../CanvasLayer/UI/UILabel")
+ui_updated_path = NodePath("../CanvasLayer/UI/LastUpdated")
 cubes_to_spawn = ExtResource( 2 )
 attract_point_path = NodePath("../AttractionPoint")
 
@@ -37,23 +37,25 @@ mode = 1
 [node name="PlaneShape" type="CollisionShape" parent="PlaneInstance/PlaneRigidBody"]
 shape = SubResource( 2 )
 
-[node name="UI" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Background" type="ColorRect" parent="UI"]
+[node name="Background" type="ColorRect" parent="CanvasLayer/UI"]
 anchor_right = 1.0
 margin_bottom = 89.0
 color = Color( 0, 0, 0, 0.498039 )
 
-[node name="UILabel" type="Label" parent="UI"]
+[node name="UILabel" type="Label" parent="CanvasLayer/UI"]
 margin_left = 16.0
 margin_top = 47.0
 margin_right = 56.0
 margin_bottom = 61.0
 text = "One cube = ?"
 
-[node name="LastUpdated" type="Label" parent="UI"]
+[node name="LastUpdated" type="Label" parent="CanvasLayer/UI"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -56.0
@@ -65,26 +67,26 @@ grow_vertical = 0
 text = "Last updated: ???"
 align = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI"]
 anchor_right = 1.0
 margin_left = 16.0
 margin_top = 16.0
 margin_right = -16.0
 margin_bottom = 20.0
 
-[node name="UIOption" type="OptionButton" parent="UI/HBoxContainer"]
+[node name="UIOption" type="OptionButton" parent="CanvasLayer/UI/HBoxContainer"]
 margin_right = 160.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 160, 0 )
 focus_mode = 0
 text = "Loading..."
 
-[node name="VSeparator" type="VSeparator" parent="UI/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/UI/HBoxContainer"]
 margin_left = 164.0
 margin_right = 168.0
 margin_bottom = 20.0
 
-[node name="SubsetOption" type="OptionButton" parent="UI/HBoxContainer"]
+[node name="SubsetOption" type="OptionButton" parent="CanvasLayer/UI/HBoxContainer"]
 margin_left = 172.0
 margin_right = 273.0
 margin_bottom = 20.0
@@ -123,5 +125,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.866309, -2.38419e-07 )
 radius = 0.103478
 height = 43.8692
 
-[connection signal="item_selected" from="UI/HBoxContainer/UIOption" to="Spawner" method="_on_UIOption_item_selected"]
-[connection signal="item_selected" from="UI/HBoxContainer/SubsetOption" to="Spawner" method="_on_UIOption_item_selected"]
+[connection signal="item_selected" from="CanvasLayer/UI/HBoxContainer/UIOption" to="Spawner" method="_on_UIOption_item_selected"]
+[connection signal="item_selected" from="CanvasLayer/UI/HBoxContainer/SubsetOption" to="Spawner" method="_on_UIOption_item_selected"]
