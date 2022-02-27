@@ -5,7 +5,7 @@ func _ready() -> void:
 	set_collision_layer_bit(0, visible);
 	pass
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	set_collision_layer_bit(0, visible);
 	pass
 

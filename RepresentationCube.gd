@@ -11,7 +11,7 @@ func _ready() -> void:
 	starting_pos = translation;
 	pass
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("push_zup"):
 		apply_central_impulse(translation.direction_to(attract_point.translation));
 	elif Input.is_action_just_pressed("push_away"):
