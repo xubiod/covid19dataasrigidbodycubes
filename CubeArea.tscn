@@ -13,7 +13,7 @@ extents = Vector3( 8, 0.05, 8 )
 
 [sub_resource type="CylinderShape" id=3]
 radius = 0.0998693
-height = 38.2727
+height = 42.8788
 
 [node name="Spatial" type="Spatial"]
 
@@ -115,12 +115,13 @@ mode = 3
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CubeAreaCamera/Sword"]
-transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 1.78814e-06, -19.4061 )
+transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 1.43051e-06, -21.5121 )
 shape = SubResource( 3 )
 
 [node name="CSGCylinder" type="CSGCylinder" parent="CubeAreaCamera/Sword/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.866309, -2.38419e-07 )
 radius = 0.103478
-height = 38.3847
+height = 43.8692
 
 [connection signal="item_selected" from="UI/HBoxContainer/UIOption" to="Spawner" method="_on_UIOption_item_selected"]
 [connection signal="item_selected" from="UI/HBoxContainer/SubsetOption" to="Spawner" method="_on_UIOption_item_selected"]
