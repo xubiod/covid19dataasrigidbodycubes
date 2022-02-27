@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Spawner.gd" type="Script" id=1]
 [ext_resource path="res://RepresentationCube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://CubeAreaCamera.gd" type="Script" id=3]
+[ext_resource path="res://Sword.gd" type="Script" id=4]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 16, 16 )
@@ -10,14 +11,18 @@ size = Vector2( 16, 16 )
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 8, 0.05, 8 )
 
+[sub_resource type="CylinderShape" id=3]
+radius = 0.0998693
+height = 38.2727
+
 [node name="Spatial" type="Spatial"]
 
 [node name="Spawner" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.74924, 0 )
 script = ExtResource( 1 )
 ui_option_path = NodePath("../UI/HBoxContainer/UIOption")
 ui_subset_path = NodePath("../UI/HBoxContainer/SubsetOption")
 ui_label_path = NodePath("../UI/UILabel")
+ui_updated_path = NodePath("../UI/LastUpdated")
 cubes_to_spawn = ExtResource( 2 )
 attract_point_path = NodePath("../AttractionPoint")
 
@@ -47,6 +52,18 @@ margin_top = 47.0
 margin_right = 56.0
 margin_bottom = 61.0
 text = "One cube = ?"
+
+[node name="LastUpdated" type="Label" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -56.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Last updated: ???"
+align = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 anchor_right = 1.0
@@ -78,6 +95,12 @@ text = "Total Cases"
 items = [ "Total Cases", null, false, 0, null, "Total Deaths", null, false, 1, null, "Total Tests", null, false, 2, null, "Recovered", null, false, 3, null, "Critical", null, false, 4, null, "Active", null, false, 5, null ]
 selected = 0
 
+[node name="AttractionPoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 5.555, 0 )
+
+[node name="CSGSphere" type="CSGSphere" parent="AttractionPoint"]
+transform = Transform( 0.340503, 0, 0, 0, 0.340503, 7.45058e-09, 0, -7.45058e-09, 0.340503, 0, 0, 0 )
+
 [node name="CubeAreaCamera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 8.88955, 19.2035 )
 script = ExtResource( 3 )
@@ -85,11 +108,19 @@ script = ExtResource( 3 )
 [node name="RayCast" type="RayCast" parent="CubeAreaCamera"]
 cast_to = Vector3( 0, 0, -100 )
 
-[node name="AttractionPoint" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 3.46826, 5.86584 )
+[node name="Sword" type="RigidBody" parent="CubeAreaCamera"]
+transform = Transform( 1, 0, 0, 0, 0.999308, -0.0371844, 0, 0.0371844, 0.999308, 0, -0.886105, 0 )
+collision_mask = 0
+mode = 3
+script = ExtResource( 4 )
 
-[node name="CSGSphere" type="CSGSphere" parent="AttractionPoint"]
-transform = Transform( 0.340503, 0, 0, 0, 0.340503, 7.45058e-09, 0, -7.45058e-09, 0.340503, 0, 2.20273, -5.41924 )
+[node name="CollisionShape" type="CollisionShape" parent="CubeAreaCamera/Sword"]
+transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 1.78814e-06, -19.4061 )
+shape = SubResource( 3 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="CubeAreaCamera/Sword/CollisionShape"]
+radius = 0.103478
+height = 38.3847
 
 [connection signal="item_selected" from="UI/HBoxContainer/UIOption" to="Spawner" method="_on_UIOption_item_selected"]
 [connection signal="item_selected" from="UI/HBoxContainer/SubsetOption" to="Spawner" method="_on_UIOption_item_selected"]

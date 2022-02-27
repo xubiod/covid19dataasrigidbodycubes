@@ -8,6 +8,8 @@ export var ui_subset_path : NodePath;
 onready var ui_subset = get_node(ui_subset_path) as OptionButton;
 export var ui_label_path : NodePath;
 onready var ui_label = get_node(ui_label_path) as Label;
+export var ui_updated_path : NodePath;
+onready var ui_updated = get_node(ui_updated_path) as Label;
 export var cubes_to_spawn : PackedScene;
 
 export var attract_point_path : NodePath;
@@ -57,11 +59,12 @@ func _ready() -> void:
 	for obj in parsed_data:
 		if (obj.has("country")):
 			if obj.has("continent") && obj["continent"] != null:
-				(ui_option as OptionButton).add_item(obj["country"] + ", " + obj["continent"]);
+				ui_option.add_item(obj["country"] + ", " + obj["continent"]);
 			else:
-				(ui_option as OptionButton).add_item(obj["country"]);
+				ui_option.add_item(obj["country"]);
 
-	(ui_option as OptionButton).selected = 0;
+	ui_option.selected = -1;
+	ui_option.text = "Done. Pick a country"
 	pass
 
 const subsets = ["cases", "deaths", "tests", "recovered", "critical", "active"];
@@ -84,6 +87,8 @@ func _on_UIOption_item_selected(index: int) -> void:
 	else:
 		total_cases = new_data[subsets[ui_subset.selected]].total;
 
+	ui_updated.text = "Last updated: " + new_data["time"];
+
 	if total_cases == null:
 		total_cases = 0;
 		ui_label.text = "No data is supplied for that combo";
@@ -99,7 +104,7 @@ func _on_UIOption_item_selected(index: int) -> void:
 	elif total_cases_int > 10_000_000:
 		total_cases_int /= 75_000;
 		ui_label.text = "One cube = 75K";
-	elif  total_cases_int > 2_500_000:
+	elif total_cases_int > 2_500_000:
 		total_cases_int /= 50_000;
 		ui_label.text = "One cube = 50K";
 	elif total_cases_int > 500_000:
@@ -122,7 +127,7 @@ func _on_UIOption_item_selected(index: int) -> void:
 		child = cubes_to_spawn.instance();
 		child.attract_point = attract_point_n;
 		(child.get_child(0) as CSGBox).material = materials[ui_subset.selected];
-		location = Vector3((_number % 16) - 8, (((_number / 16) / 16) % 16 + 12), (_number / 16) % 16 - 8);
+		location = Vector3((_number % 16) - 8, (((_number / 16) / 16) % 16 + 20), (_number / 16) % 16 - 8);
 		child.translation = location * .7;
 		add_child(child);
 	pass
