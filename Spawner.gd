@@ -97,24 +97,31 @@ func _on_UIOption_item_selected(index: int) -> void:
 	# total_cases = total_cases.replace(",", "");
 	var total_cases_int : int = (total_cases);
 	var total_cases_int_b : int = (total_cases);
+	var scale_factor : int = 1;
 
 	if total_cases_int > 100_000_000:
 		total_cases_int /= 400_000;
+		scale_factor = 2.2;
 		ui_label.text = "One cube = 400K";
 	elif total_cases_int > 10_000_000:
 		total_cases_int /= 75_000;
+		scale_factor = 2.0;
 		ui_label.text = "One cube = 75K";
 	elif total_cases_int > 2_500_000:
 		total_cases_int /= 50_000;
+		scale_factor = 1.8;
 		ui_label.text = "One cube = 50K";
 	elif total_cases_int > 500_000:
 		total_cases_int /= 7_000;
+		scale_factor = 1.6;
 		ui_label.text = "One cube = 7K";
 	elif total_cases_int > 5_000:
 		total_cases_int /= 1_000;
+		scale_factor = 1.4;
 		ui_label.text = "One cube = 1K";
 	elif total_cases_int > 2_000:
 		total_cases_int /= 100;
+		scale_factor = 1.2;
 		ui_label.text = "One cube = 100";
 	else:
 		total_cases_int /= 1;
@@ -128,7 +135,8 @@ func _on_UIOption_item_selected(index: int) -> void:
 		child.attract_point = attract_point_n;
 		(child.get_child(0) as CSGBox).material = materials[ui_subset.selected];
 		location = Vector3((_number % 16) - 8, (((_number / 16) / 16) % 16 + 20), (_number / 16) % 16 - 8);
-		child.translation = location * .7;
+		child.translation = location * .7 * scale_factor;
+		child.scale *= scale_factor;
 		add_child(child);
 	pass
 
