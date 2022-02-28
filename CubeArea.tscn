@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Spawner.gd" type="Script" id=1]
 [ext_resource path="res://RepresentationCube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://CubeAreaCamera.gd" type="Script" id=3]
 [ext_resource path="res://Sword.gd" type="Script" id=4]
 [ext_resource path="res://push_particle.tres" type="Material" id=5]
+[ext_resource path="res://pull_particle.tres" type="Material" id=6]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 16, 16 )
@@ -36,6 +37,7 @@ ui_label_path = NodePath("../CanvasLayer/UI/UILabel")
 ui_updated_path = NodePath("../CanvasLayer/UI/LastUpdated")
 cubes_to_spawn = ExtResource( 2 )
 explode_particles_path = NodePath("../AttractionPoint/ExplodeParticles")
+pull_particles_path = NodePath("../AttractionPoint/PullParticles")
 attract_point_path = NodePath("../AttractionPoint")
 
 [node name="PlaneInstance" type="MeshInstance" parent="."]
@@ -122,6 +124,17 @@ fract_delta = false
 local_coords = false
 draw_order = 2
 process_material = ExtResource( 5 )
+draw_pass_1 = SubResource( 5 )
+
+[node name="PullParticles" type="Particles" parent="AttractionPoint"]
+material_override = SubResource( 4 )
+generate_lightmap = false
+emitting = false
+amount = 128
+fract_delta = false
+local_coords = false
+draw_order = 2
+process_material = ExtResource( 6 )
 draw_pass_1 = SubResource( 5 )
 
 [node name="CSGSphere" type="CSGSphere" parent="AttractionPoint"]

@@ -15,6 +15,9 @@ export var cubes_to_spawn : PackedScene;
 export var explode_particles_path : NodePath;
 onready var explode_particles = get_node(explode_particles_path) as Particles;
 
+export var pull_particles_path : NodePath;
+onready var pull_particles = get_node(pull_particles_path) as Particles;
+
 export var attract_point_path : NodePath;
 onready var attract_point_n = get_node(attract_point_path) as Spatial;
 
@@ -78,6 +81,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("push_away"):
 		explode_particles.restart();
 		explode_particles.emitting = true;
+	pull_particles.emitting = Input.is_action_pressed("push_zup");
 	pass
 
 func _on_UIOption_item_selected(index: int) -> void:

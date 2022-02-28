@@ -1,0 +1,18 @@
+[gd_resource type="ParticlesMaterial" load_steps=3 format=2]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.317757, 0.385913 ), -1.75503, -1.75503, 0, 0, Vector2( 0.995327, 0.0218254 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[resource]
+trail_divisor = 5
+emission_shape = 1
+emission_sphere_radius = 16.0
+flag_align_y = true
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+radial_accel = -32.0
+scale = 4.0
+scale_curve = SubResource( 2 )
