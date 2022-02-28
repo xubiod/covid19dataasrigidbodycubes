@@ -12,6 +12,9 @@ export var ui_updated_path : NodePath;
 onready var ui_updated = get_node(ui_updated_path) as Label;
 export var cubes_to_spawn : PackedScene;
 
+export var explode_particles_path : NodePath;
+onready var explode_particles = get_node(explode_particles_path) as Particles;
+
 export var attract_point_path : NodePath;
 onready var attract_point_n = get_node(attract_point_path) as Spatial;
 
@@ -70,6 +73,12 @@ func _ready() -> void:
 const subsets = ["cases", "deaths", "tests", "recovered", "critical", "active"];
 var materials = [load("res://rep_total.tres"), load("res://rep_dead.tres"), load("res://rep_tests.tres"), load("res://rep_recovered.tres"),
 					load("res://rep_critical.tres"), load("res://rep_active.tres")];
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("push_away"):
+		explode_particles.restart();
+		explode_particles.emitting = true;
+	pass
 
 func _on_UIOption_item_selected(index: int) -> void:
 	index = ui_option.selected;

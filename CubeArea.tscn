@@ -1,15 +1,26 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Spawner.gd" type="Script" id=1]
 [ext_resource path="res://RepresentationCube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://CubeAreaCamera.gd" type="Script" id=3]
 [ext_resource path="res://Sword.gd" type="Script" id=4]
+[ext_resource path="res://push_particle.tres" type="Material" id=5]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 16, 16 )
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 8, 0.05, 8 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+flags_disable_ambient_light = true
+
+[sub_resource type="SphereMesh" id=5]
+radius = 0.1
+height = 0.2
+radial_segments = 4
+rings = 1
 
 [sub_resource type="CylinderShape" id=3]
 radius = 0.0998693
@@ -24,6 +35,7 @@ ui_subset_path = NodePath("../CanvasLayer/UI/HBoxContainer/SubsetOption")
 ui_label_path = NodePath("../CanvasLayer/UI/UILabel")
 ui_updated_path = NodePath("../CanvasLayer/UI/LastUpdated")
 cubes_to_spawn = ExtResource( 2 )
+explode_particles_path = NodePath("../AttractionPoint/ExplodeParticles")
 attract_point_path = NodePath("../AttractionPoint")
 
 [node name="PlaneInstance" type="MeshInstance" parent="."]
@@ -97,7 +109,20 @@ items = [ "Total Cases", null, false, 0, null, "Total Deaths", null, false, 1, n
 selected = 0
 
 [node name="AttractionPoint" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.926397, 0.376548, 0, -0.376548, 0.926397, 0, 5.555, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.555, 0 )
+
+[node name="ExplodeParticles" type="Particles" parent="AttractionPoint"]
+material_override = SubResource( 4 )
+generate_lightmap = false
+emitting = false
+amount = 128
+one_shot = true
+explosiveness = 1.0
+fract_delta = false
+local_coords = false
+draw_order = 2
+process_material = ExtResource( 5 )
+draw_pass_1 = SubResource( 5 )
 
 [node name="CSGSphere" type="CSGSphere" parent="AttractionPoint"]
 transform = Transform( 0.340503, 0, 0, 0, 0.340503, 7.45058e-09, 0, -7.45058e-09, 0.340503, 0, 0, 0 )
